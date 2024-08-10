@@ -4,8 +4,8 @@ import { OpenAI } from "openai";
 export async function suggestRecipe(inventory) {
   const openai = new OpenAI({
     baseURL: "https://openrouter.ai/api/v1",
-    apiKey: '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',
-  });
+    apiKey: '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',
+  });    
 
   // Format the item list into a string
   const itemString = inventory.map(item => `${item.name} ${item.quantity}`).join(', ');

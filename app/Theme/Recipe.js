@@ -6,7 +6,7 @@ import Fade from '@mui/material/Fade';
 import { suggestRecipe } from '../AiModule/AiRecipe';
 import { keyframes } from '@emotion/react';
 import IconButton from '@mui/material/IconButton';
-
+import Loader from './Loading';
 // Styled components for animations and styling
 const fadeIn = keyframes`
   from {
@@ -162,6 +162,8 @@ const RecipePage = ({ inventory }) => {
       }} gutterBottom>
         Inspiration for Your Next Meal
       </Typography>
+      {loading ? <Loader/>:(
+        <div>
       <GoldenButton
         size="small"
         edge="end"
@@ -205,7 +207,7 @@ const RecipePage = ({ inventory }) => {
             <Typography variant="body1">Your recipe will appear here.</Typography>
           )}
         </RecipeBox>
-      </Fade>
+      </Fade></div>)}
     </Container>
   );
 };

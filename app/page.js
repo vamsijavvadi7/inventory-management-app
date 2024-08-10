@@ -9,7 +9,7 @@ import PrimarySearchAppBar from "./Theme/Nav";
 import RecipePage from "./Theme/Recipe";
 import LandingPage from "./Theme/Landingpage";
 import ResponsiveAlert from "./Theme/ResponsiveAlert";
-
+import Loader from "./Theme/Loading";
 
 export default function Home() {  
   const [inventory, setInventory] = useState([]);
@@ -23,6 +23,7 @@ export default function Home() {
   const [recipeview, setRecipeView] = useState(false);
   const [showinventoryview,setShowInventoryView]=useState(false)
   const [alertOpen, setAlertOpen] = useState(false);
+  const [loading,setLoading]=useState(false)
   // const [openAddItemModal, setOpenAddItemModal] = useState(false);
   // const [addSelectedItemOption, setAddSelectedItemOption] = useState('');
 
@@ -82,12 +83,14 @@ export default function Home() {
   
   const updateInventory = async () => {
     const snapshot = query(collection(firestore, 'inventory'));
+    setLoading(true)
     const docs = await getDocs(snapshot);
     const inventoryList = [];
     docs.forEach((doc) => {
       inventoryList.push({ name: doc.id, ...doc.data() });
     });
     setInventory(inventoryList);
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -255,7 +258,7 @@ export default function Home() {
     
     <PrimarySearchAppBar sx={{ width: '100vw', mb: 2 }} closeRecipeView={closeRecipeView} showRecipeView={showRecipeView} inventory={inventory} setSelectedItem={setSelectedItem} onAddItemOptionChange={handleAddItemOptionChange} />
    {recipeview && (<RecipePage inventory={inventory} />)}
-   {showinventoryview && (<Box  
+   {showinventoryview && (loading ? <Loader /> : <Box  
       width="100vw" 
       height="100vh" 
       display="flex" 
